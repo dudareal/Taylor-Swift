@@ -1,19 +1,27 @@
 from flask import Flask, request, jsonify
-
+from flask_cors import CORS
+ 
 app = Flask(__name__)
-
-@app.route("/api", methods=['GET'])
-def teste():
-    data = {"message": "Taylor linda"}
-    return jsonify(data)
-
-@app.route('/usuario/novo', methods=['POST'])
-def criar_novo_usuario():
-    novo_usuario = request.json
-    print(novo_usuario)
-    return jsonify({
-        'user': novo_usuario,
-        'message': 'Usuário criado com sucesso!'
-        })
+ 
+usuarios = [
+    'Duda',
+    'Maite',
+    'Sofia',
+    'Helena',
+    'Elisa',
+    'TinkerBell'
+]
+ 
+@app.route('/users', methods=['GET'])
+def pegar_usuarios():
+    return jsonify({'users': usuarios})
+ 
+@app.route('/user/<numero>', methods=['GET'])
+def pegar_usuario(numero):
+    localNumber = int(numero)
+ 
+    return jsonify({'users': usuarios[localNumber]})
+ 
+ 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=3000)
